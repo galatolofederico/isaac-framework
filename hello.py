@@ -21,9 +21,5 @@ class Hello(OptimizableModel):
         return(abs(12 - prod([n.val() for n in self.numbers])))
 
 
-opt = Optimizers.RandomOptimizer(Hello, constraints=["hello"])
-while opt.bestEv != 0:
-    opt.epoch()
-    print "Best: ",opt.bestObj.serialize(),", ",opt.bestEv
-
-
+opt = Optimizers.RandomOptimizer(model=Hello, constraints=["hello"])
+opt.runUntilConvergence()

@@ -7,7 +7,7 @@ class RandomOptimizer(Optimizer):
         self.bestObj = None
 
     def epoch(self):
-        randomobj = self.model()
+        randomobj = self.getInstance()
         ev = randomobj.evaluate(self.constraints)
         if ev < self.bestFitness:
             self.bestFitness = ev

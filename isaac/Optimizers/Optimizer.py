@@ -6,6 +6,9 @@ class Optimizer:
             raise Exception("You have to specify a model and a constraints group")
         self.model = kargs["model"]
         self.constraints = kargs["constraints"]
+        self.args = ()
+        if "args" in kargs:
+            self.args = kargs["args"]
 
     def epoch(self):
         raise NotImplementedError("An optimizer must have the epoch method")
@@ -13,6 +16,9 @@ class Optimizer:
     def hasFinished(self):
         raise NotImplementedError("An optimizer must have the hasFinished method")
     
+    def getInstance(self):
+        return self.model(*self.args)
+
     def __str__(self):
         #An optimizer should implement this
         return ""

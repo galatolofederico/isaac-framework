@@ -16,6 +16,9 @@ class Optimizer:
     def hasFinished(self):
         raise NotImplementedError("An optimizer must have the hasFinished method")
     
+    def getResult(self):
+        raise NotImplementedError("An optimizer must have the getResult method")
+
     def getInstance(self):
         return self.model(*self.args)
 

@@ -1,8 +1,10 @@
 class OptimizableGroup:
     def __init__(self):
         self.optimizables = []
+
     def addOptimizable(self, opt):
         self.optimizables.append(opt)
+
     def serialize(self):
         return [o.val() for o in self.optimizables]
 
@@ -17,6 +19,7 @@ class OptimizableObject:
         self.groups = {}
         self.constraints = []
         self.ref = ref
+        
     def getGroup(self, name):
         if name in self.groups:
             return self.groups[name]

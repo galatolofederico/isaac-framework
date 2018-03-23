@@ -15,4 +15,4 @@ class Optimizable:
     def set(self, value):
         self.value = value
     def new(self):
-        pass
+        raise NotImplementedError("An Optimizable object should implement the new function")

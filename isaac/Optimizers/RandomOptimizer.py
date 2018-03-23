@@ -18,3 +18,6 @@ class RandomOptimizer(Optimizer):
     
     def hasFinished(self):
         return self.bestFitness == 0
+    
+    def getResult(self):
+        return self.bestObj

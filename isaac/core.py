@@ -54,27 +54,6 @@ class OptimizationController:
             serialized[key] = obj.groups[key].serialize()
         return serialized
 
-class OptimizableModel:
-    def __del__(self):
-        cs = ControllerSingleton()
-        controller = cs.get()
-        controller.remove(self)
-    
-    def evaluate(self, constraints):
-        cs = ControllerSingleton()
-        controller = cs.get()
-        ret = 0
-        for constraintgroup in constraints:
-            if constraintgroup in controller.constraints:
-                for constraint in controller.constraints[constraintgroup]:
-                    ret += constraint.weight * constraint.fn(self)
-        return ret
-
-    def serialize(self):
-        cs = ControllerSingleton()
-        controller = cs.get()
-        return controller.serializeObj(self)
-
 
 class ControllerSingleton:
     singleton = None
@@ -84,6 +63,3 @@ class ControllerSingleton:
     
     def get(self):
         return ControllerSingleton.singleton
-
-cs = ControllerSingleton()
-controller = cs.get()

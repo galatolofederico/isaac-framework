@@ -25,3 +25,5 @@ opt = Optimizers.RandomOptimizer(Hello, constraints=["hello"])
 while opt.bestEv != 0:
     opt.epoch()
     print "Best: ",opt.bestObj.serialize(),", ",opt.bestEv
+
+

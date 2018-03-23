@@ -15,8 +15,8 @@ TODO
 class Hello(OptimizableModel):
     def __init__(self):
         #Initialize the list words with two lists of size 5 filled with Optmizables.Char
-        self.words = [[Optimizables.Char(of=self, group="first_word") for _ in range(0, 5)]
-        ,[Optimizables.Char(of=self, group="second_word") for _ in range(0, 5)]]
+        self.words = [[Optimizables.Char(of=self, group="first_word") for _ in range(0, 5)],
+        [Optimizables.Char(of=self, group="second_word") for _ in range(0, 5)]]
     
     @OptimizationConstraint("hello", 1)
     def first_word(self):
@@ -34,7 +34,7 @@ opt = Optimizers.GeneticOptimizer(model=Hello, constraints=["hello"])
 opt.runUntilConvergence()
 print([[c.val() for c in w] for w in opt.getResult().words])
 ```
-#### Two numbers knowing sum and product with randomic seach
+#### Two numbers knowing sum and product with randomic search
 
 ```python
 #Find two numbers such that the sum is targetSum and product is targetProduct

@@ -22,8 +22,8 @@ def editDistance(s1, s2):
 class Hello(OptimizableModel):
     def __init__(self):
         #Initialize the list words with two lists of size 5 filled with Optmizables.Char
-        self.words = [[Optimizables.Char(of=self, group="first_word") for _ in range(0, 5)]
-        ,[Optimizables.Char(of=self, group="second_word") for _ in range(0, 5)]]
+        self.words = [[Optimizables.Char(of=self, group="first_word") for _ in range(0, 5)],
+        [Optimizables.Char(of=self, group="second_word") for _ in range(0, 5)]]
     
     @OptimizationConstraint("hello", 1)
     def first_word(self):

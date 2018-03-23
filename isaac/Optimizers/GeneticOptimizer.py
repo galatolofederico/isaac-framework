@@ -155,10 +155,3 @@ class GeneticOptimizer(Optimizer):
     
     def getResult(self):
         return self.population[0][0]
-
-
-
-'''
-class GeneticOptimizer(Optimizer):
-    pass
-'''

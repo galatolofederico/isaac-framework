@@ -1,0 +1,2 @@
+class GeneticOptimizer:
+    pass

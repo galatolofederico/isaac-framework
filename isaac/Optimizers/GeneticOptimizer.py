@@ -65,7 +65,7 @@ class GeneticOptimizer(Optimizer):
         self.mutationrate = 0.2
         if "mutationrate" in kargs:
             self.mutationrate = kargs["mutationrate"]
-        self.threads = 5
+        self.threads = 4
         if "threads" in kargs:
             self.threads = kargs["threads"]
 

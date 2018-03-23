@@ -3,14 +3,14 @@
 Isaac was born with the intent to fill the **gap** between **high level description** capabilities of the modern programming languages and the **optimizations algorithms**.
 With isaac you can model your optimization problems using all the expressive power of Python; You just need to **substitute** the **parameters** that you want to **optimize** with the Isaac's **placeholders** and **just run** the algorithm that you prefer.
 
-##Documentation
+## Documentation
 
 TODO
 
-##Examples
+## Examples
 
-####Hello World with genetic algorithm
-```
+#### Hello World with genetic algorithm
+```python
 #The array words should be equal to ["hello", "world"]
 class Hello(OptimizableModel):
     def __init__(self):
@@ -36,7 +36,7 @@ print([[c.val() for c in w] for w in opt.getResult().words])
 ```
 #### Two numbers knowing sum and product with randomic seach
 
-```
+```python
 #Find two numbers such that the sum is targetSum and product is targetProduct
 class SumProd(OptimizableModel):
     def __init__(self, targetSum, targetProduct):

@@ -6,6 +6,12 @@ class OptimizableGroup:
     def serialize(self):
         return [o.val() for o in self.optimizables]
 
+    def deserialize(self, ser):
+        if len(ser) != len(self.optimizables):
+            raise Exception("Trying to deserialize different objects in size")
+        for i, v in enumerate(ser):
+            self.optimizables[i].set(v)
+
 class OptimizableObject:
     def __init__(self, ref):
         self.groups = {}
@@ -53,6 +59,11 @@ class OptimizationController:
         for key in obj.groups:
             serialized[key] = obj.groups[key].serialize()
         return serialized
+    
+    def deserializeObj(self, obj, serialized):
+        obj = self.getObject(obj)
+        for key in obj.groups:
+            obj.groups[key].deserialize(serialized[key])
 
 
 class ControllerSingleton:

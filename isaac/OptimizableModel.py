@@ -20,3 +20,8 @@ class OptimizableModel:
         cs = ControllerSingleton()
         controller = cs.get()
         return controller.serializeObj(self)
+    
+    def deserialize(self, serialized):
+        cs = ControllerSingleton()
+        controller = cs.get()
+        controller.deserializeObj(self, serialized)

@@ -10,8 +10,8 @@ def prod(iterable):
 #Find two numbers such that the sum is targetSum and product is targetProduct
 class SumProd(OptimizableModel):
     def __init__(self, targetSum, targetProduct):
-        self.numbers = [Optimizables.IntRange(of=self, group="number", range=(0, 10)), 
-        Optimizables.IntRange(of=self, group="number", range=(0, 10))]
+        self.numbers = [Optimizables.Int(of=self, group="number", range=(0, 10)), 
+        Optimizables.Int(of=self, group="number", range=(0, 10))]
         self.targetSum = targetSum
         self.targetProduct = targetProduct
 

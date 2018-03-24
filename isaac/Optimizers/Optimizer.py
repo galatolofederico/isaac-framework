@@ -2,10 +2,12 @@ import sys
 
 class Optimizer:
     def __init__(self, **kargs):
-        if "model" not in kargs or "constraints" not in kargs:
-            raise Exception("You have to specify a model and a constraints group")
+        if "model" not in kargs:
+            raise Exception("You have to specify at least a model to optimize")
         self.model = kargs["model"]
-        self.constraints = kargs["constraints"]
+        self.constraints = [""]
+        if "constraints" in kargs:
+            self.constraints += kargs["constraints"]
         self.args = ()
         if "args" in kargs:
             self.args = kargs["args"]

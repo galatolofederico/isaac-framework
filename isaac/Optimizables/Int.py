@@ -2,9 +2,11 @@ from Optimizable import Optimizable
 import random
 
 
-class IntRange(Optimizable):
+class Int(Optimizable):
     def __init__(self, **kargs):
         Optimizable.__init__(self, **kargs)
+        if "range" not in kargs:
+            raise Exception("You have to specify a 'range'")
         self.range = kargs["range"]
         self.new()
     def new(self):

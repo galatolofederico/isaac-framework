@@ -14,7 +14,7 @@ class Optimizer:
         self.maximize = False
         if "maximize" in kargs:
             self.maximize = kargs["maximize"]
-        self.convergenceWindow = 50
+        self.convergenceWindow = 100
         if "convergenceWindow" in kargs:
             self.convergenceWindow = kargs["convergenceWindow"]
 

@@ -81,7 +81,7 @@ class Knapsack(OptimizableModel):
     
     @OptimizationConstraint("value", 1)
     def totalValue(self):
-        return sum([item.weight for item in self.items.val()])
+        return sum([item.value for item in self.items.val()])
     
     def __str__(self):
         ret = str([str(item) for item in self.items.val()])+"\n"
@@ -92,7 +92,7 @@ itemset = []
 for _ in range(0,100):
     itemset.append(Item(random.randint(0,20), random.randint(0,20)))
 
-opt = Optimizers.GeneticOptimizer(model=Knapsack, constraints=["weights", "value"], args=(itemset, 500), maximize=True)
+opt = Optimizers.GeneticOptimizer(model=Knapsack, constraints=["weights", "value"], args=(itemset, 500), maximize=True, convergenceWindow=100)
 opt.runUntilConvergence()
 print(opt.getResult())
 ```

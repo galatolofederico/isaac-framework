@@ -32,7 +32,7 @@ class Knapsack(OptimizableModel):
     
     def __str__(self):
         ret = str([str(item) for item in self.items if item.inKnapsack.val()])+"\n"
-        ret += "Totale value: "+str(self.totalValue())+", totalweight: "+str(self.totalWeight())
+        ret += "Totale value: "+str(self.totalValue())+", Total weight: "+str(self.totalWeight())
         return ret
 
 

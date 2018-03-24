@@ -9,6 +9,9 @@ class Optimizer:
         self.args = ()
         if "args" in kargs:
             self.args = kargs["args"]
+        self.maximize = False
+        if "maximize" in kargs:
+            self.maximize = kargs["maximize"]
 
     def epoch(self):
         raise NotImplementedError("An optimizer must have the epoch method")
@@ -28,6 +31,12 @@ class Optimizer:
     
     def runUntilConvergence(self, verbose=True):
         while not self.hasFinished():
+            self.epoch()
+            if verbose:
+                sys.stdout.write(str(self))
+    
+    def runEpochs(self, n, verbose=True):
+        for _ in range(0, n):
             self.epoch()
             if verbose:
                 sys.stdout.write(str(self))

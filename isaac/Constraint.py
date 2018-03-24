@@ -17,3 +17,4 @@ class OptimizationConstraint(object):
     
     def __call__(self, fn, *args, **kargs):
         self.controller.addConstraint(self.of, Constraint(self.weight, fn))
+        return fn

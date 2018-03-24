@@ -70,7 +70,7 @@ class GeneticOptimizer(Optimizer):
             self.threads = kargs["threads"]
 
         self.population = []
-        self.MAX_INT = 2**32
+        self.MAX_INT = 2**32 if not self.maximize else -2**32
         for _ in range(0,self.npop):
             self.population.append([self.getInstance(), self.MAX_INT])
         
@@ -88,7 +88,7 @@ class GeneticOptimizer(Optimizer):
         for t in threads:
             t.join()
 
-        self.population = sorted(self.population, key=lambda x: x[1])
+        self.population = sorted(self.population, key=lambda x: x[1], reverse=self.maximize)
         
         newpop = [self.population[0]]
         for _ in range(0, self.npop):
@@ -115,7 +115,7 @@ class GeneticOptimizer(Optimizer):
         for t in threads:
             t.join()
 
-        newpop = sorted(newpop, key=lambda x: x[1])
+        newpop = sorted(newpop, key=lambda x: x[1], reverse=self.maximize)
 
         self.population = newpop[0:self.npop]
         self.lastscore = self.population[0][1]

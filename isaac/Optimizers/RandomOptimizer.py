@@ -16,8 +16,8 @@ class RandomOptimizer(Optimizer):
     def __str__(self):
         return "(bestFitness: "+str(self.bestFitness)+", bestObject: "+str(self.bestObj.serialize())+")\n"
     
-    def hasFinished(self):
-        return self.bestFitness == 0
-    
     def getResult(self):
         return self.bestObj
+    
+    def getLastFitness(self):
+        return self.bestFitness

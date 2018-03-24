@@ -37,5 +37,5 @@ for _ in range(0,100):
     itemset.append(Item(random.randint(0,20), random.randint(0,20)))
 
 opt = Optimizers.GeneticOptimizer(model=Knapsack, constraints=["weights", "value"], args=(itemset, 500), maximize=True)
-opt.runEpochs(200)
+opt.runUntilConvergence()
 print(opt.getResult())

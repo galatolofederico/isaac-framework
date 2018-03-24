@@ -146,12 +146,12 @@ class GeneticOptimizer(Optimizer):
         newb.mutation() if random.random() > self.mutationrate else 0
          
         return [newa, newb]
-    
-    def hasFinished(self):
-        return self.lastscore == 0
 
     def __str__(self):
         return "(epoch: "+str(self.epochs)+", score: "+str(self.lastscore)+")\n"
     
     def getResult(self):
         return self.population[0][0]
+    
+    def getLastFitness(self):
+        return self.population[0][1]

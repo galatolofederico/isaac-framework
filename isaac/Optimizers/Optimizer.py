@@ -14,15 +14,18 @@ class Optimizer:
         self.maximize = False
         if "maximize" in kargs:
             self.maximize = kargs["maximize"]
+        self.convergenceWindow = 50
+        if "convergenceWindow" in kargs:
+            self.convergenceWindow = kargs["convergenceWindow"]
 
     def epoch(self):
         raise NotImplementedError("An optimizer must have the epoch method")
     
-    def hasFinished(self):
-        raise NotImplementedError("An optimizer must have the hasFinished method")
-    
     def getResult(self):
         raise NotImplementedError("An optimizer must have the getResult method")
+    
+    def getLastFitness(self):
+        raise NotImplementedError("An optimizer must have the getLastFitness method")
 
     def getInstance(self):
         return self.model(*self.args)
@@ -32,10 +35,19 @@ class Optimizer:
         return ""
     
     def runUntilConvergence(self, verbose=True):
-        while not self.hasFinished():
+        lastFitness = None
+        convergenceCount = 0
+        while True:
             self.epoch()
             if verbose:
                 sys.stdout.write(str(self))
+            if self.getLastFitness() == lastFitness:
+                convergenceCount += 1
+            else:
+                convergenceCount = 0
+            if convergenceCount >= self.convergenceWindow:
+                return
+            lastFitness = self.getLastFitness()
     
     def runEpochs(self, n, verbose=True):
         for _ in range(0, n):

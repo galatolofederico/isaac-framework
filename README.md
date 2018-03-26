@@ -29,6 +29,10 @@ class Hello(OptimizableModel):
         #Compute the distance between the first word and "world"
         word = "".join([c.val() for c in self.words[1]])
         return editDistance(word, "world")
+
+opt = Optimizers.GeneticOptimizer(model=Hello, objectives=["hello"])
+opt.runUntilConvergence()
+print([[c.val() for c in w] for w in opt.getResult().words])
 ```
 #### Two numbers knowing sum and product with randomic search
 

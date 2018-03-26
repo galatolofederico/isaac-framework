@@ -5,9 +5,12 @@ class Optimizer:
         if "model" not in kargs:
             raise Exception("You have to specify at least a model to optimize")
         self.model = kargs["model"]
-        self.constraints = [""]
-        if "constraints" in kargs:
-            self.constraints += kargs["constraints"]
+        self.penalties = [""]
+        if "penalties" in kargs:
+            self.penalties += kargs["penalties"]
+        self.objectives = [""]
+        if "objectives" in kargs:
+            self.objectives += kargs["objectives"]
         self.args = ()
         if "args" in kargs:
             self.args = kargs["args"]

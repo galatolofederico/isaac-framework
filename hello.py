@@ -1,8 +1,7 @@
 #! /usr/bin/env python
 
 from __future__ import print_function
-from isaac import Optimizables, OptimizableModel, OptimizationConstraint, Optimizers
-
+from isaac import *
 
 def editDistance(s1, s2):
     if len(s1) > len(s2):
@@ -25,13 +24,13 @@ class Hello(OptimizableModel):
         self.words = [[Optimizables.Char(of=self, group="first_word") for _ in range(0, 5)],
         [Optimizables.Char(of=self, group="second_word") for _ in range(0, 5)]]
     
-    @OptimizationConstraint("hello", 1)
+    @OptimizationObjective("hello")
     def first_word(self):
         #Compute the distance between the first word and "hello"
         word = "".join([c.val() for c in self.words[0]])
         return editDistance(word, "hello")
 
-    @OptimizationConstraint("hello", 1)
+    @OptimizationObjective("hello")
     def second_word(self):
         #Compute the distance between the first word and "world"
         word = "".join([c.val() for c in self.words[1]])
@@ -39,6 +38,6 @@ class Hello(OptimizableModel):
 
 
 
-opt = Optimizers.GeneticOptimizer(model=Hello, constraints=["hello"])
+opt = Optimizers.GeneticOptimizer(model=Hello, objectives=["hello"])
 opt.runUntilConvergence()
 print([[c.val() for c in w] for w in opt.getResult().words])

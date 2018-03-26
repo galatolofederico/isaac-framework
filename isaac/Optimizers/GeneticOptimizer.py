@@ -41,18 +41,20 @@ class Counter:
         return self.finished >= self.max
         
 class Worker(threading.Thread):
-    def __init__(self, population, counter, constraints):
+    def __init__(self, population, counter, objectives, penalties, maximize):
         threading.Thread.__init__(self)
         self.population = population
         self.counter = counter
-        self.constraints = constraints
+        self.objectives = objectives
+        self.penalties = penalties
+        self.maximize = maximize
     
     def run(self):
         while self.counter.thereIsMore():
             i = self.counter.getAndInc()
             if i == -1:
                 break
-            self.population[i][1] = self.population[i][0].evaluate(self.constraints)
+            self.population[i][1] = self.population[i][0].evaluate(self.objectives, self.penalties, self.maximize)
             self.counter.signal()
 
 class GeneticOptimizer(Optimizer):
@@ -82,7 +84,7 @@ class GeneticOptimizer(Optimizer):
         counter = Counter(self.npop)
         threads = []
         for _ in range(0, self.threads):
-            worker = Worker(self.population, counter, self.constraints)
+            worker = Worker(self.population, counter, self.objectives, self.penalties, self.maximize)
             threads.append(worker)
             worker.start()
         for t in threads:
@@ -108,7 +110,7 @@ class GeneticOptimizer(Optimizer):
         counter = Counter(len(newpop))
         threads = []
         for _ in range(0, self.threads):
-            worker = Worker(newpop, counter, self.constraints)
+            worker = Worker(newpop, counter, self.objectives, self.penalties, self.maximize)
             threads.append(worker)
             worker.start()
 

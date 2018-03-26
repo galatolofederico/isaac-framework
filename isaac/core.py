@@ -31,12 +31,19 @@ class OptimizationController:
     def __init__(self):
         self.objects = {}
         self.penalties = {}
+        self.objectives = {}
 
-    def addPenalty(self, objname, c):
-        if objname not in self.penalties:
-            self.penalties[objname] = []
-        if c not in self.penalties[objname]:
-            self.penalties[objname].append(c)
+    def _addToHT(self, ht, groupName, c):
+        if groupName not in ht:
+            ht[groupName] = []
+        if c not in ht[groupName]:
+            ht[groupName].append(c)
+
+    def addPenalty(self, groupName, c):
+        self._addToHT(self.penalties, groupName, c)
+
+    def addObjective(self, groupName, c):
+        self._addToHT(self.objectives, groupName, c)
 
     def getObject(self, ref):
         hash = id(ref)

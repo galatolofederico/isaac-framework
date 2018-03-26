@@ -1,3 +1,4 @@
 import Optimizables
+import Optimizers
 from OptimizableModel import OptimizableModel
-from optimization import OptimizationConstraint
+from optimization import OptimizationPenalty, OptimizationObjective

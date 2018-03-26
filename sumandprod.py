@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from isaac import Optimizables, OptimizableModel, OptimizationConstraint, Optimizers
+from isaac import *
 import operator
 
 def prod(iterable):
@@ -15,14 +15,14 @@ class SumProd(OptimizableModel):
         self.targetSum = targetSum
         self.targetProduct = targetProduct
 
-    @OptimizationConstraint("sumprod", 1)
+    @OptimizationObjective("sumprod")
     def sum(self):
         return(abs(self.targetSum - sum([n.val() for n in self.numbers])))
 
-    @OptimizationConstraint("sumprod", 1)
+    @OptimizationObjective("sumprod")
     def prod(self):
         return(abs(self.targetProduct - prod([n.val() for n in self.numbers])))
 
 
-opt = Optimizers.RandomOptimizer(model=SumProd, constraints=["sumprod"], args=(7, 12))
+opt = Optimizers.RandomOptimizer(model=SumProd, objectives=["sumprod"], args=(7, 12))
 opt.runUntilConvergence()

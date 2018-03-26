@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 from __future__ import print_function
-from isaac import Optimizables, OptimizableModel, OptimizationConstraint, Optimizers
+from isaac import *
 import random
 
 class Item:
@@ -18,24 +18,25 @@ class Knapsack(OptimizableModel):
         self.maxweight = maxweight
         self.items = Optimizables.List(of=self, itemset=itemset, replicationrange=(0,1))
     
-    @OptimizationConstraint("weights", 1)
+    @OptimizationPenalty("weights", 10)
     def totalWeight(self):
         totalweigth = sum([item.weight for item in self.items.val()])
-        return totalweigth if totalweigth <= self.maxweight else -2**32
+        return totalweigth - self.maxweight if totalweigth > self.maxweight else 0
     
-    @OptimizationConstraint("value", 1)
+    @OptimizationObjective("value", 1)
     def totalValue(self):
         return sum([item.value for item in self.items.val()])
     
     def __str__(self):
         ret = str([str(item) for item in self.items.val()])+"\n"
-        ret += "Totale value: "+str(self.totalValue())+", Total weight: "+str(self.totalWeight())
+        totalweigth = sum([item.weight for item in self.items.val()])
+        ret += "Totale value: "+str(self.totalValue())+", Total weight: "+str(totalweigth)
         return ret
 
 itemset = []
 for _ in range(0,100):
     itemset.append(Item(random.randint(0,20), random.randint(0,20)))
 
-opt = Optimizers.GeneticOptimizer(model=Knapsack, constraints=["weights", "value"], args=(itemset, 500), maximize=True, convergenceWindow=150)
+opt = Optimizers.GeneticOptimizer(model=Knapsack, penalties=["weights"], objectives=["value"], args=(itemset, 500), maximize=True, convergenceWindow=150)
 opt.runUntilConvergence()
 print(opt.getResult())

@@ -1,3 +1,3 @@
 import Optimizables
 from OptimizableModel import OptimizableModel
-from Constraint import OptimizationConstraint
+from optimization import OptimizationConstraint

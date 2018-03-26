@@ -17,7 +17,7 @@ class OptimizableGroup:
 class OptimizableObject:
     def __init__(self, ref):
         self.groups = {}
-        self.constraints = []
+        self.penalties = []
         self.ref = ref
         
     def getGroup(self, name):
@@ -30,13 +30,13 @@ class OptimizableObject:
 class OptimizationController:
     def __init__(self):
         self.objects = {}
-        self.constraints = {}
+        self.penalties = {}
 
-    def addConstraint(self, objname, c):
-        if objname not in self.constraints:
-            self.constraints[objname] = []
-        if c not in self.constraints[objname]:
-            self.constraints[objname].append(c)
+    def addPenalty(self, objname, c):
+        if objname not in self.penalties:
+            self.penalties[objname] = []
+        if c not in self.penalties[objname]:
+            self.penalties[objname].append(c)
 
     def getObject(self, ref):
         hash = id(ref)

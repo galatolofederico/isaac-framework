@@ -18,21 +18,17 @@ class Hello(OptimizableModel):
         self.words = [[Optimizables.Char(of=self, group="first_word") for _ in range(0, 5)],
         [Optimizables.Char(of=self, group="second_word") for _ in range(0, 5)]]
     
-    @OptimizationConstraint("hello", 1)
+    @OptimizationObjective("hello")
     def first_word(self):
         #Compute the distance between the first word and "hello"
         word = "".join([c.val() for c in self.words[0]])
         return editDistance(word, "hello")
 
-    @OptimizationConstraint("hello", 1)
+    @OptimizationObjective("hello")
     def second_word(self):
         #Compute the distance between the first word and "world"
         word = "".join([c.val() for c in self.words[1]])
         return editDistance(word, "world")
-
-opt = Optimizers.GeneticOptimizer(model=Hello, constraints=["hello"])
-opt.runUntilConvergence()
-print([[c.val() for c in w] for w in opt.getResult().words])
 ```
 #### Two numbers knowing sum and product with randomic search
 
@@ -45,16 +41,16 @@ class SumProd(OptimizableModel):
         self.targetSum = targetSum
         self.targetProduct = targetProduct
 
-    @OptimizationConstraint("sumprod", 1)
+    @OptimizationObjective("sumprod")
     def sum(self):
         return(abs(self.targetSum - sum([n.val() for n in self.numbers])))
 
-    @OptimizationConstraint("sumprod", 1)
+    @OptimizationObjective("sumprod")
     def prod(self):
         return(abs(self.targetProduct - prod([n.val() for n in self.numbers])))
 
 
-opt = Optimizers.RandomOptimizer(model=SumProd, constraints=["sumprod"], args=(7, 12))
+opt = Optimizers.RandomOptimizer(model=SumProd, objectives=["sumprod"], args=(7, 12))
 opt.runUntilConvergence()
 ```
 #### Binary knapsack problem with genetic algorithm
@@ -74,25 +70,26 @@ class Knapsack(OptimizableModel):
         self.maxweight = maxweight
         self.items = Optimizables.List(of=self, itemset=itemset, replicationrange=(0,1))
     
-    @OptimizationConstraint("weights", 1)
+    @OptimizationPenalty("weights", 10)
     def totalWeight(self):
         totalweigth = sum([item.weight for item in self.items.val()])
-        return totalweigth if totalweigth <= self.maxweight else -2**32
+        return totalweigth - self.maxweight if totalweigth > self.maxweight else 0
     
-    @OptimizationConstraint("value", 1)
+    @OptimizationObjective("value", 1)
     def totalValue(self):
         return sum([item.value for item in self.items.val()])
     
     def __str__(self):
         ret = str([str(item) for item in self.items.val()])+"\n"
-        ret += "Totale value: "+str(self.totalValue())+", Total weight: "+str(self.totalWeight())
+        totalweigth = sum([item.weight for item in self.items.val()])
+        ret += "Totale value: "+str(self.totalValue())+", Total weight: "+str(totalweigth)
         return ret
 
 itemset = []
 for _ in range(0,100):
     itemset.append(Item(random.randint(0,20), random.randint(0,20)))
 
-opt = Optimizers.GeneticOptimizer(model=Knapsack, constraints=["weights", "value"], args=(itemset, 500), maximize=True, convergenceWindow=150)
+opt = Optimizers.GeneticOptimizer(model=Knapsack, penalties=["weights"], objectives=["value"], args=(itemset, 500), maximize=True, convergenceWindow=150)
 opt.runUntilConvergence()
 print(opt.getResult())
 ```

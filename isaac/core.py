@@ -44,37 +44,6 @@ class OptimizationController:
     def addObjective(self, groupName, c):
         self._addToHT(self.objectives, groupName, c)
 
-    '''def getObject(self, ref):
-        hash = id(ref)
-        if hash in self.objects:
-            return self.objects[hash]
-        self.objects[hash] = OptimizableObject(ref)
-        return self.objects[hash]
-    
-    def removeObject(self, hash):
-        del self.objects[hash]
-
-    def add(self, **kargs):
-        obj = self.getObject(kargs["of"])
-        grp = obj.getGroup(kargs["group"])
-        grp.addOptimizable(kargs["optimizable"])
-    
-    def remove(self, of):
-        self.removeObject(id(of))'''
-    
-    def serializeObj(self, obj):
-        obj = obj._optimizableGroups
-        serialized = {}
-        for key in obj.groups:
-            serialized[key] = obj.groups[key].serialize()
-        return serialized
-    
-    def deserializeObj(self, obj, serialized):
-        obj = obj._optimizableGroups
-        for key in obj.groups:
-            obj.groups[key].deserialize(serialized[key])
-
-
 
 class ControllerSingleton:
     singleton = None

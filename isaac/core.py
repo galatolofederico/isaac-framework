@@ -50,6 +50,9 @@ class ControllerSingleton:
     def __init__(self):
         if ControllerSingleton.singleton == None:
             ControllerSingleton.singleton = OptimizationController()
+            ControllerSingleton.singleton.objectives[""] = []
+            ControllerSingleton.singleton.penalties[""] = []
+            
     
     def get(self):
         return ControllerSingleton.singleton

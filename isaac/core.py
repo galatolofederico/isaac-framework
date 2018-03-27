@@ -15,10 +15,9 @@ class OptimizableGroup:
             self.optimizables[i].set(v)
 
 class OptimizableObject:
-    def __init__(self, ref):
+    def __init__(self):
         self.groups = {}
         self.penalties = []
-        self.ref = ref
         
     def getGroup(self, name):
         if name in self.groups:
@@ -45,7 +44,7 @@ class OptimizationController:
     def addObjective(self, groupName, c):
         self._addToHT(self.objectives, groupName, c)
 
-    def getObject(self, ref):
+    '''def getObject(self, ref):
         hash = id(ref)
         if hash in self.objects:
             return self.objects[hash]
@@ -61,19 +60,20 @@ class OptimizationController:
         grp.addOptimizable(kargs["optimizable"])
     
     def remove(self, of):
-        self.removeObject(id(of))
+        self.removeObject(id(of))'''
     
     def serializeObj(self, obj):
-        obj = self.getObject(obj)
+        obj = obj._optimizableGroups
         serialized = {}
         for key in obj.groups:
             serialized[key] = obj.groups[key].serialize()
         return serialized
     
     def deserializeObj(self, obj, serialized):
-        obj = self.getObject(obj)
+        obj = obj._optimizableGroups
         for key in obj.groups:
             obj.groups[key].deserialize(serialized[key])
+
 
 
 class ControllerSingleton:

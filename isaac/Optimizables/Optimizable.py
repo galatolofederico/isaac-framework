@@ -10,9 +10,9 @@ class Optimizable:
         else:
             self.group = ""
         if native:
-            cs = core.ControllerSingleton()
-            self.controller = cs.get()
-            self.controller.add(of=self.of, group=self.group, optimizable=self)
+            if not hasattr(self.of, "_optimizablesGroups"):
+                self.of._optimizablesGroups = core.OptimizableObject()
+            self.of._optimizablesGroups.getGroup(self.group).addOptimizable(self)
     def val(self):
         return self.value
     def set(self, value):

@@ -38,6 +38,6 @@ class Hello(OptimizableModel):
 
 
 
-#opt = Optimizers.GeneticOptimizer(model=Hello, objectives=["hello"])
-#opt.runUntilConvergence()
-#print([[c.val() for c in w] for w in opt.getResult().words])
+opt = Optimizers.GeneticOptimizer(model=Hello, objectives=["hello"])
+opt.runUntilConvergence()
+print([[c.val() for c in w] for w in opt.getResult().words])

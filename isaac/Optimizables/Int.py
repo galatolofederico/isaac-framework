@@ -3,6 +3,10 @@ import random
 
 
 class Int(Optimizable):
+    """
+    Description of Int
+
+    """
     def __init__(self, **kargs):
         Optimizable.__init__(self, **kargs)
         if "range" not in kargs:

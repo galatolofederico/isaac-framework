@@ -1,0 +1,6 @@
+Optimizables
+============
+
+.. toctree::
+    optimizable
+    int
